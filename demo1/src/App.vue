@@ -1,60 +1,77 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+
+    <div id="chart1" style="width:600px;height:400px"></div>
+    <div id="chart2" style="width:600px;height:400px"></div>
   </div>
 </template>
 
 <script>
+import router from './route'
+
+
+
 export default {
+
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+
+  mounted() {
+    var echarts = require('echarts');
+    var myChart1 = echarts.init(document.getElementById('chart1'));
+    var myChart2 = echarts.init(document.getElementById('chart2'));
+    myChart1.setOption({
+      title: {
+        text: '访问',
+        subText: '我是副标题',
+        subtextStyle: {
+          color: 'red',
+          fontSize: 16
+        }
+      },
+      tooltip: {},
+      xAxis: {
+        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+      },
+      yAxis: {},
+      series: [{
+        name: '销量',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20]
+      }]
+    });
+
+    myChart2.setOption({
+      title: {
+        text: '访问',
+        subText: 'visit',
+        subtextStyle: {
+          color: 'red',
+          fontSize: 16
+        }
+      },
+      series: [
+        {
+          name: '访问来源',
+          type: 'pie',
+          radius: '55%',
+          data: [
+            { value: 235, name: '视频广告' },
+            { value: 274, name: '联盟广告' },
+            { value: 310, name: '邮件营销' },
+            { value: 335, name: '直接访问' },
+            { value: 400, name: '搜索引擎' }
+          ]
+        }
+      ]
+    })
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.content {
+  border: 1px solid rgb(169, 169, 169);
+  margin-top: 50px;
 }
 </style>
